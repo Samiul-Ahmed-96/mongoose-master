@@ -1,0 +1,17 @@
+// $eq (Equal) example: Find documents where the age is equal to 12
+db.getCollection("practice-data").find({ age: { $eq: 12 } })
+
+// $ne (Not Equal) example: Find documents where the age is not equal to 12
+db.getCollection("practice-data").find({ age: { $ne: 12 } })
+
+// $gt (Greater Than) example: Find documents where the age is greater than 18
+db.getCollection("practice-data").find({ age: { $gt: 18 } })
+
+// $gte (Greater Than or Equal) example: Find documents where the age is greater than or equal to 30
+db.getCollection("practice-data").find({ age: { $gte: 30 } })
+
+// $lt (Less Than) example: Find documents where the age is less than 30
+db.getCollection("practice-data").find({ age: { $lt: 30 } })
+
+// $lte (Less Than or Equal) example: Find documents where the age is less than or equal to 30
+db.getCollection("practice-data").find({ age: { $lte: 30 } })
