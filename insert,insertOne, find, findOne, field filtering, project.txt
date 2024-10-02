@@ -1,0 +1,25 @@
+// Insert one document
+db.getCollection("practice-data").insertOne({ name: "Spiderman" })
+
+// Insert multiple documents
+db.getCollection("practice-data").insertMany([
+    { name: 'Spiderman' },
+    { name: 'Superman' },
+    { name: 'Batman' }
+])
+
+// Find documents where gender is "Male"
+db.getCollection("practice-data").find({ gender: "Male" })
+
+// Find documents where gender is "Male" and return only the gender, email, and phone fields (field filtering)
+db.getCollection("practice-data").find({ gender: "Male" }, {
+    gender: 1,
+    email: 1,
+    phone: 1
+})
+
+// Same query as above, but using the project method with find
+db.getCollection("practice-data").find({ gender: "Male" }).project({
+    gender: 1,
+    email: 1
+})
