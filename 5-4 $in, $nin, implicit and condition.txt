@@ -1,0 +1,7 @@
+//Implicit and
+// Filter Age 
+db.getCollection("practice-data").find({age : {$lte : 30 , $gte : 18}},{age:1}).sort({ age:1 })
+
+//Implicit and
+// Filter Age with Gender Femaile
+db.getCollection("practice-data").find({gender : "Female",age : {$lte : 30 , $gte : 18}},{age:1 , gender : 1}).sort({ age:1 })
