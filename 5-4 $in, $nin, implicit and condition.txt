@@ -1,23 +1,31 @@
 // Filter Age between 18 and 30
 // $lte: Less than or equal to | $gte: Greater than or equal to
 db.getCollection("practice-data")
+
+
   .find({ age: { $lte: 30, $gte: 18 } }, { age: 1 })
   .sort({ age: 1 });
 
 // Filter Age between 18 and 30 with Gender Female
 // $lte: Less than or equal to | $gte: Greater than or equal to | Implicit AND between age and gender
+
+
 db.getCollection("practice-data")
   .find({ gender: "Female", age: { $lte: 30, $gte: 18 } }, { age: 1, gender: 1 })
   .sort({ age: 1 });
 
 // Filter Age with specific values [18, 20, 22, 24] and Gender Female
 // $in: Matches any value in the array | Implicit AND between age and gender
+
+
 db.getCollection("practice-data")
   .find({ gender: "Female", age: { $in: [18, 20, 22, 24] } }, { age: 1, gender: 1 })
   .sort({ age: 1 });
 
 // Filter Age not in [18, 20, 22, 24] and Gender Female
 // $nin: Matches any value NOT in the array | Implicit AND between age and gender
+
+
 db.getCollection("practice-data")
   .find({ gender: "Female", age: { $nin: [18, 20, 22, 24] } }, { age: 1, gender: 1 })
   .sort({ age: 1 });
@@ -25,6 +33,8 @@ db.getCollection("practice-data")
 // Filter Age not in [18, 20, 22, 24], Gender Female, and Interests in ["Cooking", "Gaming"]
 // $nin: Matches any value NOT in the array | $in: Matches any value in the array
 // Implicit AND between age, gender, and interests
+
+
 db.getCollection("practice-data")
   .find({ gender: "Female", age: { $nin: [18, 20, 22, 24] }, interests: { $in: ["Cooking", "Gaming"] } }, { age: 1, gender: 1, interests: 1 })
   .sort({ age: 1 });
