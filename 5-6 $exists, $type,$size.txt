@@ -1,0 +1,20 @@
+// Example using $exists operator
+// Finds documents where the "age" field exists, regardless of its value or type
+db.getCollection("practice-data").find({ age: { $exists: true } })
+
+// Example using $type operator
+// Finds documents where the "age" field is of type "number"
+db.getCollection("practice-data").find({ age: { $type: "number" } })
+
+// Finds documents where the "company" field is explicitly null
+db.getCollection("practice-data").find({ company: { $type: "null" } })
+
+// Finds documents where the "friends" field is an array
+db.getCollection("practice-data").find({ friends: { $type: "array" } })
+
+// Example using $size operator
+// Finds documents where the "friends" array has exactly 4 elements
+db.getCollection("practice-data").find({ friends: { $size: 4 } })
+
+// Finds documents where the "friends" array is empty (has 0 elements)
+db.getCollection("practice-data").find({ friends: { $size: 0 } })
