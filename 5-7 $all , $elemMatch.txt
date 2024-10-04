@@ -1,0 +1,18 @@
+// Find interests 2 number position cooking documents 
+
+db.getCollection("practice-data").find({"interests.2" : "Cooking"}).project({interests : 1})
+
+// $all match interests where cooking and traverlling exists in the documents
+
+db.getCollection("practice-data").find({interests : {$all: ["Cooking" , "Travelling"]} }).project({interests : 1})
+
+// Find JAVASCRIPT documents from a array of objects
+db.getCollection("practice-data").find({"skills.name" : "JAVASCRIPT" }).project({interests : 1})
+
+
+// $elemMatch operator element match
+db.getCollection("practice-data").find({
+    skills : {
+        $elemMatch: {name : 'JAVASCRIPT' , level : 'Intermidiate'}
+    }
+}).project({skills : 1})
