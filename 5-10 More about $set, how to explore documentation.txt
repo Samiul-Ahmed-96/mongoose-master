@@ -1,0 +1,50 @@
+// Update the nested property "city" inside "address" using $set
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $set: {
+            "address.city": "Dhaka" // Update the city property in the address object
+        }
+    }
+)
+
+// Update multiple nested properties ("city" and "country") in "address" using $set
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $set: {
+            "address.city": "Dhaka",       // Update the city property
+            "address.country": "Bangladesh" // Update the country property
+        }
+    }
+)
+
+// Update the first object in the "education" array, specifically the "major" field using $set
+// The $ positional operator refers to the first matching array element
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065"), "education.major": "Art" },
+    {
+        $set: {
+            "education.$.major": "Cse" // Update the major field of the first matched object in the array
+        }
+    }
+)
+
+// Increment the value of the "age" field by 34 using the $inc operator
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $inc: {
+            age: 34 // Increment the age field by 34
+        }
+    }
+)
+
+
+Summary of Methods:
+
+- $set: Updates specific fields of a document. If the field doesn't exist, MongoDB will add it.
+
+- $ positional operator: Targets the first array element that matches the query.
+
+- $inc: Increments the value of a field by a specified amount.
