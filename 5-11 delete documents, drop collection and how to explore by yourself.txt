@@ -1,0 +1,23 @@
+// Delete a single document from the collection using deleteOne
+db.getCollection("practice-data").deleteOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000068") } // Deletes the document with the matching _id
+)
+
+// Create a new collection named "post-data"
+db.createCollection("post-data") // Creates a new collection in the database
+
+// Insert a new document into the "post-data" collection
+db.getCollection("post-data").insertOne(
+    { Test: 'Testing' } // Inserts a new document with a field "Test" and value "Testing"
+)
+
+// Drop the entire "news" collection using drop
+db.news.drop(
+    { writeConcern: { w: 1 } } // Drops the entire "news" collection with write concern to ensure operation
+)
+
+
+- deleteOne: Deletes a single document that matches the filter from the collection.
+- createCollection: Creates a new collection in the database.
+- insertOne: Inserts a new document into the specified collection.
+- drop: Drops the entire collection, permanently removing all documents and indexes from it.
