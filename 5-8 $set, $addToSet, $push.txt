@@ -1,0 +1,74 @@
+
+#### 1. **Finding a Document**
+
+To find and retrieve a document from the `practice-data` collection using its `_id`, you can use the following query:
+
+```javascript
+db.getCollection("practice-data").find({ _id: ObjectId("6406ad63fc13ae5a40000065") })
+```
+
+This query returns the document with the matching `_id`.
+
+---
+
+#### 2. **Updating a Primitive Field**
+
+To update a specific field, such as replacing the `age` field value, use the `$set` operator. This operator replaces the current value of the field without affecting other fields in the document.
+
+**Example: Update the `age` field to 25**
+```javascript
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $set: { age: 25 }
+    }
+)
+```
+
+---
+
+#### 3. **Adding a Single Value to an Array Field**
+
+If you want to add a single value to an array field (for example, adding a new interest to the `interests` array), use the `$addToSet` operator. This ensures that duplicates are not added to the array.
+
+**Example: Add "Driving" to the `interests` array**
+```javascript
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $addToSet: { interests: "Driving" }
+    }
+)
+```
+
+---
+
+#### 4. **Adding Multiple Values to an Array (No Duplicates)**
+
+To add multiple values to an array and avoid duplicates, use the `$addToSet` operator combined with `$each`. This ensures that only new, non-duplicate values are added.
+
+**Example: Add "Playing" and "Walking" to the `interests` array**
+```javascript
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $addToSet: { interests: { $each: ["Playing", "Walking"] } }
+    }
+)
+```
+
+---
+
+#### 5. **Adding Multiple Values to an Array (Allowing Duplicates)**
+
+If you want to add multiple values to an array while allowing duplicates, use the `$push` operator with `$each`.
+
+**Example: Add "Playing" and "Walking" to the `interests` array (duplicates allowed)**
+```javascript
+
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $push: { interests: { $each: ["Playing", "Walking"] } }
+    }
+)
