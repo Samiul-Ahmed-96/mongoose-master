@@ -1,0 +1,34 @@
+//Delete a single field from a ducument 
+// $unset
+
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $unset: {
+            birthday: ""
+        }
+    }
+)
+
+//Using 1 means true and delete age from a document
+
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $unset: {
+            age: 1
+        }
+    }
+)
+
+Delete last item from friends field which is a array of strings in a document
+using $pop
+
+db.getCollection("practice-data").updateOne(
+    { _id: ObjectId("6406ad63fc13ae5a40000065") },
+    {
+        $pop: {
+            friends: 1
+        }
+    }
+)
