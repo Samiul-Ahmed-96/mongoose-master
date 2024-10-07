@@ -1,0 +1,79 @@
+// Example 1: Match, Add Fields, and Project
+
+db.getCollection("practice-data").aggregate([
+
+    // Stage 1: Match documents where gender is "Male"
+    { 
+        $match: { gender: "Male" } 
+    },
+
+    // Stage 2: Add a new field "course" with value "level-2" for each document
+    { 
+        $addFields: { course: "level-2" } 
+    },
+
+    // Stage 3: Only project (show) the "course" field
+    { 
+        $project: { course: 1 } 
+    }
+
+])
+
+// Example 2: Match, Add Fields, Project, and Output to a New Collection
+
+db.getCollection("practice-data").aggregate([
+
+    // Stage 1: Match documents where gender is "Male"
+    { 
+        $match: { gender: "Male" } 
+    },
+
+    // Stage 2: Add two new fields: "course" and "eduTech"
+    { 
+        $addFields: { course: "level-2", eduTech: 'Programming Hero' } 
+    },
+
+    // Stage 3: Project (show) the "course", "eduTech", "name", "email", and "phone" fields
+    { 
+        $project: { course: 1, eduTech: 1, name: 1, email: 1, phone: 1 } 
+    },
+
+    // Stage 4: Output the result to a new collection "course-students"
+    { 
+        $out: "course-students" 
+    }
+
+])
+
+// Example 3: Match, Add Fields, Project, and Merge with Existing Collection
+
+db.getCollection("practice-data").aggregate([
+
+    // Stage 1: Match documents where gender is "Male"
+    { 
+        $match: { gender: "Male" } 
+    },
+
+    // Stage 2: Add two new fields: "course" and "eduTech"
+    { 
+        $addFields: { course: "level-2", eduTech: 'Programming Hero' } 
+    },
+
+    // Stage 3: Project (show) the "course", "eduTech", "name", "email", and "phone" fields
+    { 
+        $project: { course: 1, eduTech: 1, name: 1, email: 1, phone: 1 } 
+    },
+
+    // Stage 4: Merge the result into the existing "practice-data" collection
+    { 
+        $merge: "practice-data" 
+    }
+
+])
+
+
+Example 1: Filters, adds a field, and projects a specific field.
+
+Example 2: Filters, adds multiple fields, projects, and outputs the result into a new collection.
+
+Example 3: Filters, adds multiple fields, projects, and merges the result into the existing collection.

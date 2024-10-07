@@ -1,14 +1,18 @@
-//aggregate another way to find data
-// Using $match
+// Another way to find data using aggregate and $match
 
 db.getCollection("practice-data").aggregate([
-    
-    //Stage 1
-    
-    {$match : {gender : "Male" , age : {$lte : 30}}},
-    
-    //Stage 2
-    
-    {$project: {gender : 1 , age : 1}}
-    
+
+    // Stage 1: Match documents where gender is "Male" and age is less than or equal to 30
+    { 
+        $match: { gender: "Male", age: { $lte: 30 } } 
+    },
+
+    // Stage 2: Project (show) the "gender" and "age" fields only
+    { 
+        $project: { gender: 1, age: 1 } 
+    }
+
 ])
+
+
+Then it projects only the gender and age fields in the output.
