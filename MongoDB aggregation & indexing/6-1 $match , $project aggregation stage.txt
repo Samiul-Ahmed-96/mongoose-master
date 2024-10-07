@@ -1,0 +1,14 @@
+//aggregate another way to find data
+// Using $match
+
+db.getCollection("practice-data").aggregate([
+    
+    //Stage 1
+    
+    {$match : {gender : "Male" , age : {$lte : 30}}},
+    
+    //Stage 2
+    
+    {$project: {gender : 1 , age : 1}}
+    
+])
