@@ -1,0 +1,335 @@
+db.getCollection("practice-data").aggregate([
+
+    //stage 1
+
+    { $group: { _id: "$gender" } }
+
+])
+//Group Based on gender
+
+{
+	"_id" : "Non-binary"
+},
+
+/* 2 */
+{
+	"_id" : "Genderfluid"
+},
+
+/* 3 */
+{
+	"_id" : "Agender"
+},
+
+/* 4 */
+{
+	"_id" : "Male"
+},
+
+/* 5 */
+{
+	"_id" : "Female"
+},
+
+/* 6 */
+{
+	"_id" : "Polygender"
+}
+
+// Group based on age
+
+db.getCollection("practice-data").aggregate([
+
+    //stage 1
+
+    { $group: { _id: "$age" , count : {$sum: 1}} }
+
+])
+
+
+// Group based on country 
+
+db.getCollection("practice-data").aggregate([
+
+    //stage 1
+
+    { $group: { _id: "$address.country" , count : {$sum: 1}} }
+
+])
+
+// output
+
+{
+	"_id" : "Russia",
+	"count" : 6
+},
+
+/* 2 */
+{
+	"_id" : "Zambia",
+	"count" : 1
+},
+
+/* 3 */
+{
+	"_id" : "Peru",
+	"count" : 4
+},
+
+/* 4 */
+{
+	"_id" : "Thailand",
+	"count" : 1
+},
+
+/* 5 */
+{
+	"_id" : "Armenia",
+	"count" : 1
+},
+
+/* 6 */
+{
+	"_id" : "Canada",
+	"count" : 1
+},
+
+/* 7 */
+{
+	"_id" : "Indonesia",
+	"count" : 9
+},
+
+/* 8 */
+{
+	"_id" : "Tunisia",
+	"count" : 1
+},
+
+/* 9 */
+{
+	"_id" : "Niger",
+	"count" : 1
+},
+
+/* 10 */
+{
+	"_id" : "Vietnam",
+	"count" : 2
+},
+
+/* 11 */
+{
+	"_id" : "Somalia",
+	"count" : 1
+},
+
+/* 12 */
+{
+	"_id" : "Guatemala",
+	"count" : 1
+},
+
+/* 13 */
+{
+	"_id" : "Brazil",
+	"count" : 4
+},
+
+/* 14 */
+{
+	"_id" : "Iran",
+	"count" : 1
+},
+
+/* 15 */
+{
+	"_id" : "France",
+	"count" : 1
+},
+
+/* 16 */
+{
+	"_id" : "Bahamas",
+	"count" : 1
+},
+
+/* 17 */
+{
+	"_id" : "Norway",
+	"count" : 1
+},
+
+/* 18 */
+{
+	"_id" : "Japan",
+	"count" : 2
+},
+
+/* 19 */
+{
+	"_id" : "Cyprus",
+	"count" : 1
+},
+
+/* 20 */
+{
+	"_id" : "Palestinian Territory",
+	"count" : 1
+},
+
+/* 21 */
+{
+	"_id" : "Dominican Republic",
+	"count" : 1
+},
+
+/* 22 */
+{
+	"_id" : "Poland",
+	"count" : 2
+},
+
+/* 23 */
+{
+	"_id" : "Honduras",
+	"count" : 1
+},
+
+/* 24 */
+{
+	"_id" : "China",
+	"count" : 12
+},
+
+/* 25 */
+{
+	"_id" : "Philippines",
+	"count" : 4
+},
+
+/* 26 */
+{
+	"_id" : "Sierra Leone",
+	"count" : 1
+},
+
+/* 27 */
+{
+	"_id" : "Slovenia",
+	"count" : 1
+},
+
+/* 28 */
+{
+	"_id" : "Guam",
+	"count" : 1
+},
+
+/* 29 */
+{
+	"_id" : "Croatia",
+	"count" : 1
+},
+
+/* 30 */
+{
+	"_id" : "Kenya",
+	"count" : 1
+},
+
+/* 31 */
+{
+	"_id" : "Yemen",
+	"count" : 1
+},
+
+/* 32 */
+{
+	"_id" : "South Africa",
+	"count" : 1
+},
+
+/* 33 */
+{
+	"_id" : "Netherlands",
+	"count" : 1
+},
+
+/* 34 */
+{
+	"_id" : "Sweden",
+	"count" : 5
+},
+
+/* 35 */
+{
+	"_id" : "Gambia",
+	"count" : 1
+},
+
+/* 36 */
+{
+	"_id" : "Greece",
+	"count" : 5
+},
+
+/* 37 */
+{
+	"_id" : "United States",
+	"count" : 2
+},
+
+/* 38 */
+{
+	"_id" : "Tanzania",
+	"count" : 1
+},
+
+/* 39 */
+{
+	"_id" : "Colombia",
+	"count" : 1
+},
+
+/* 40 */
+{
+	"_id" : "Argentina",
+	"count" : 1
+},
+
+/* 41 */
+{
+	"_id" : "Portugal",
+	"count" : 4
+},
+
+/* 42 */
+{
+	"_id" : "Czech Republic",
+	"count" : 3
+},
+
+/* 43 */
+{
+	"_id" : "Ukraine",
+	"count" : 2
+},
+
+/* 44 */
+{
+	"_id" : "Bangladesh",
+	"count" : 2
+},
+
+/* 45 */
+{
+	"_id" : "North Korea",
+	"count" : 1
+},
+
+/* 46 */
+{
+	"_id" : "Finland",
+	"count" : 1
+}
