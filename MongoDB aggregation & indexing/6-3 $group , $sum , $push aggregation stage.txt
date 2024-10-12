@@ -1,3 +1,5 @@
+//Example of group 
+
 db.getCollection("practice-data").aggregate([
 
     //stage 1
