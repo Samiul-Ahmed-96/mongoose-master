@@ -1,337 +1,298 @@
-//Example of group 
-
+// Example of grouping based on gender
 db.getCollection("practice-data").aggregate([
 
-    //stage 1
-
+    // Stage 1: Group by gender
     { $group: { _id: "$gender" } }
 
 ])
-//Group Based on gender
 
+// Output
 {
 	"_id" : "Non-binary"
 },
-
-/* 2 */
 {
 	"_id" : "Genderfluid"
 },
-
-/* 3 */
 {
 	"_id" : "Agender"
-},
-
-/* 4 */
-{
-	"_id" : "Male"
-},
-
-/* 5 */
-{
-	"_id" : "Female"
-},
-
-/* 6 */
-{
-	"_id" : "Polygender"
 }
 
-// Group based on age
-
+// Example of grouping based on age
 db.getCollection("practice-data").aggregate([
 
-    //stage 1
-
-    { $group: { _id: "$age" , count : {$sum: 1}} }
+    // Stage 1: Group by age and count the number of records for each age
+    { $group: { _id: "$age", count: { $sum: 1 } } }
 
 ])
 
-
-// Group based on country 
-
+// Example of grouping based on country
+// Using $sum as an accumulator operator
 db.getCollection("practice-data").aggregate([
 
-    //stage 1
-
-    { $group: { _id: "$address.country" , count : {$sum: 1}} }
+    // Stage 1: Group by country and count the number of records for each country
+    { $group: { _id: "$address.country", count: { $sum: 1 } } }
 
 ])
 
-// output
-
+// Output
 {
 	"_id" : "Russia",
 	"count" : 6
 },
-
-/* 2 */
 {
 	"_id" : "Zambia",
 	"count" : 1
 },
-
-/* 3 */
 {
 	"_id" : "Peru",
 	"count" : 4
 },
-
-/* 4 */
 {
 	"_id" : "Thailand",
 	"count" : 1
-},
+}
 
-/* 5 */
+// Example of grouping names based on country
+// Using $push to show the names of users who live in each country
+db.getCollection("practice-data").aggregate([
+
+    // Stage 1: Group by country and push the names of the users
+    { $group: { _id: "$address.country", showName: { $push: "$name" } } }
+
+])
+
+// Output
 {
-	"_id" : "Armenia",
-	"count" : 1
+	"_id" : "Zambia",
+	"showName" : [
+		{
+			"firstName" : "Addi",
+			"lastName" : "Nystrom"
+		}
+	]
 },
-
-/* 6 */
-{
-	"_id" : "Canada",
-	"count" : 1
-},
-
-/* 7 */
-{
-	"_id" : "Indonesia",
-	"count" : 9
-},
-
-/* 8 */
-{
-	"_id" : "Tunisia",
-	"count" : 1
-},
-
-/* 9 */
-{
-	"_id" : "Niger",
-	"count" : 1
-},
-
-/* 10 */
-{
-	"_id" : "Vietnam",
-	"count" : 2
-},
-
-/* 11 */
-{
-	"_id" : "Somalia",
-	"count" : 1
-},
-
-/* 12 */
-{
-	"_id" : "Guatemala",
-	"count" : 1
-},
-
-/* 13 */
 {
 	"_id" : "Brazil",
-	"count" : 4
+	"showName" : [
+		{
+			"firstName" : "Wilmer",
+			"lastName" : "Lavens"
+		},
+		{
+			"firstName" : "Dru",
+			"lastName" : "Drewes"
+		},
+		{
+			"firstName" : "Wesley",
+			"lastName" : "Mercik"
+		},
+		{
+			"firstName" : "Gretal",
+			"lastName" : "Kemitt"
+		}
+	]
 },
-
-/* 14 */
 {
-	"_id" : "Iran",
-	"count" : 1
+	"_id" : "Peru",
+	"showName" : [
+		{
+			"firstName" : "Clotilda",
+			"lastName" : "Pinckard"
+		},
+		{
+			"firstName" : "Cacilie",
+			"lastName" : "Boyack"
+		},
+		{
+			"firstName" : "Lindy",
+			"lastName" : "Shireff"
+		},
+		{
+			"firstName" : "Galvan",
+			"lastName" : "Clute"
+		}
+	]
+}
+
+// Example of grouping based on country, counting users, and pushing their names
+db.getCollection("practice-data").aggregate([
+
+    // Stage 1: Group by country, count users, and push their names
+    { $group: { _id: "$address.country", count: { $sum: 1 }, showName: { $push: "$name" } } }
+
+])
+
+// Output
+{
+	"_id" : "Zambia",
+	"count" : 1,
+	"showName" : [
+		{
+			"firstName" : "Addi",
+			"lastName" : "Nystrom"
+		}
+	]
 },
-
-/* 15 */
 {
-	"_id" : "France",
-	"count" : 1
+	"_id" : "Brazil",
+	"count" : 4,
+	"showName" : [
+		{
+			"firstName" : "Wilmer",
+			"lastName" : "Lavens"
+		},
+		{
+			"firstName" : "Dru",
+			"lastName" : "Drewes"
+		},
+		{
+			"firstName" : "Wesley",
+			"lastName" : "Mercik"
+		},
+		{
+			"firstName" : "Gretal",
+			"lastName" : "Kemitt"
+		}
+	]
 },
-
-/* 16 */
 {
-	"_id" : "Bahamas",
-	"count" : 1
+	"_id" : "Peru",
+	"count" : 4,
+	"showName" : [
+		{
+			"firstName" : "Clotilda",
+			"lastName" : "Pinckard"
+		},
+		{
+			"firstName" : "Cacilie",
+			"lastName" : "Boyack"
+		},
+		{
+			"firstName" : "Lindy",
+			"lastName" : "Shireff"
+		},
+		{
+			"firstName" : "Galvan",
+			"lastName" : "Clute"
+		}
+	]
+}
+
+// Example of grouping based on country, counting users, and retrieving full documents
+db.getCollection("practice-data").aggregate([
+
+    // Stage 1: Group by country, count users, and push full documents (using $$ROOT)
+    { $group: { _id: "$address.country", count: { $sum: 1 }, fullDoc: { $push: "$$ROOT" } } }
+
+])
+
+// Output
+{
+	"_id" : "Zambia",
+	"count" : 1,
+	"fullDoc" : [
+		{
+			"_id" : ObjectId("6406ad65fc13ae5a400000a5"),
+			"name" : {
+				"firstName" : "Addi",
+				"lastName" : "Nystrom"
+			},
+			"email" : "anystrom1t@blogspot.com",
+			"phone" : "(844) 7062406",
+			"gender" : "Female",
+			"age" : 3,
+			"birthday" : "4/7/2022",
+			"address" : {
+				"street" : "8 Lunder Place",
+				"city" : "Mwense",
+				"country" : "Zambia"
+			},
+			"company" : "Buzzdog",
+			"favoutiteColor" : "Violet",
+			"friends" : [ "Mezbaul Abedin", "Tanmoy Parvez", "Fahim Ahammed Firoz", "Nahid Hasan Bulbul", "Mir Hussain" ],
+			"occupation" : "Accountant III",
+			"interests" : [ "Gardening", "Writing", "Reading" ],
+			"skills" : [
+				{
+					"name" : "RUBY",
+					"level" : "Beginner",
+					"isLearning" : true
+				},
+				{
+					"name" : "JAVASCRIPT",
+					"level" : "Expert",
+					"isLearning" : false
+				}
+			],
+			"education" : [
+				{
+					"degree" : "Master of Business Administration",
+					"major" : "Education",
+					"institute" : "Shandong Economic University",
+					"year" : 2011
+				}
+			],
+			"languages" : [ "Maltese", "Lithuanian", "Pashto" ],
+			"ipAddress" : "46.121.164.165",
+			"salary" : 282
+		}
+	]
 },
-
-/* 17 */
 {
-	"_id" : "Norway",
-	"count" : 1
-},
-
-/* 18 */
-{
-	"_id" : "Japan",
-	"count" : 2
-},
-
-/* 19 */
-{
-	"_id" : "Cyprus",
-	"count" : 1
-},
-
-/* 20 */
-{
-	"_id" : "Palestinian Territory",
-	"count" : 1
-},
-
-/* 21 */
-{
-	"_id" : "Dominican Republic",
-	"count" : 1
-},
-
-/* 22 */
-{
-	"_id" : "Poland",
-	"count" : 2
-},
-
-/* 23 */
-{
-	"_id" : "Honduras",
-	"count" : 1
-},
-
-/* 24 */
-{
-	"_id" : "China",
-	"count" : 12
-},
-
-/* 25 */
-{
-	"_id" : "Philippines",
-	"count" : 4
-},
-
-/* 26 */
-{
-	"_id" : "Sierra Leone",
-	"count" : 1
-},
-
-/* 27 */
-{
-	"_id" : "Slovenia",
-	"count" : 1
-},
-
-/* 28 */
-{
-	"_id" : "Guam",
-	"count" : 1
-},
-
-/* 29 */
-{
-	"_id" : "Croatia",
-	"count" : 1
-},
-
-/* 30 */
-{
-	"_id" : "Kenya",
-	"count" : 1
-},
-
-/* 31 */
-{
-	"_id" : "Yemen",
-	"count" : 1
-},
-
-/* 32 */
-{
-	"_id" : "South Africa",
-	"count" : 1
-},
-
-/* 33 */
-{
-	"_id" : "Netherlands",
-	"count" : 1
-},
-
-/* 34 */
-{
-	"_id" : "Sweden",
-	"count" : 5
-},
-
-/* 35 */
-{
-	"_id" : "Gambia",
-	"count" : 1
-},
-
-/* 36 */
-{
-	"_id" : "Greece",
-	"count" : 5
-},
-
-/* 37 */
-{
-	"_id" : "United States",
-	"count" : 2
-},
-
-/* 38 */
-{
-	"_id" : "Tanzania",
-	"count" : 1
-},
-
-/* 39 */
-{
-	"_id" : "Colombia",
-	"count" : 1
-},
-
-/* 40 */
-{
-	"_id" : "Argentina",
-	"count" : 1
-},
-
-/* 41 */
-{
-	"_id" : "Portugal",
-	"count" : 4
-},
-
-/* 42 */
-{
-	"_id" : "Czech Republic",
-	"count" : 3
-},
-
-/* 43 */
-{
-	"_id" : "Ukraine",
-	"count" : 2
-},
-
-/* 44 */
-{
-	"_id" : "Bangladesh",
-	"count" : 2
-},
-
-/* 45 */
-{
-	"_id" : "North Korea",
-	"count" : 1
-},
-
-/* 46 */
-{
-	"_id" : "Finland",
-	"count" : 1
+	"_id" : "Brazil",
+	"count" : 4,
+	"fullDoc" : [
+		{
+			"_id" : ObjectId("6406ad64fc13ae5a4000007c"),
+			"name" : {
+				"firstName" : "Wilmer",
+				"lastName" : "Lavens"
+			},
+			"email" : "wlavenso@photobucket.com",
+			"phone" : "(395) 9268658",
+			"gender" : "Male",
+			"age" : 16,
+			"birthday" : "3/2/2022",
+			"address" : {
+				"street" : "182 Jackson Parkway",
+				"city" : "Ouro Branco",
+				"postalCode" : "59347-000",
+				"country" : "Brazil"
+			},
+			"company" : "Ailane",
+			"favoutiteColor" : "Goldenrod",
+			"friends" : [ "Fahim Ahammed Firoz", "Abdur Rakib", "Mir Hussain", "Rasel Ahmed" ],
+			"occupation" : "Assistant Media Planner",
+			"interests" : [ "Travelling", "Gaming", "Writing" ],
+			"skills" : [
+				{
+					"name" : "GO",
+					"level" : "Expert",
+					"isLearning" : true
+				},
+				{
+					"name" : "JAVA",
+					"level" : "Expert",
+					"isLearning" : false
+				},
+				{
+					"name" : "KOTLIN",
+					"level" : "Expert",
+					"isLearning" : false
+				}
+			],
+			"education" : [
+				{
+					"degree" : "Bachelor of Science",
+					"major" : "Chemical Engineering",
+					"institute" : "Universidade Federal do Acre",
+					"year" : 2015
+				}
+			],
+			"languages" : [ "Telugu", "Macedonian", "Kurdish" ],
+			"ipAddress" : "157.214.155.124",
+			"salary" : 243
+		},
+		// other documents
+	]
 }
