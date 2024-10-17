@@ -1,0 +1,111 @@
+db.getCollection("practice-data").aggregate([
+    {
+        $bucket: {
+            groupBy: "$age",               // Group by the age field
+            boundaries: [20, 40, 60, 80],  // Define age group boundaries
+            default: "Age greater than 80", // Default bucket for ages above 80
+            output: {
+                count: { $sum: 1 },        // Count the number of documents in each group
+                name: { $push: "$name" }   // Collect the names in each group
+            }
+        }
+    }
+])
+
+This groups people based on their age into 4 buckets:
+
+20 to 39
+40 to 59
+60 to 79
+Default: Ages above 80
+Each group returns a document with:
+
+The group _id (the starting boundary)
+count of documents in that group
+An array of names in the name field.
+
+
+db.getCollection("practice-data").aggregate([
+    {
+        $bucket: {
+            groupBy: "$age",
+            boundaries: [20, 40, 60, 80],
+            default: "Age greater than 80",
+            output: {
+                count: { $sum: 1 },       // Count number of documents
+                name: { $push: "$$ROOT" } // Push full document into `name` array
+            }
+        }
+    }
+])
+
+
+This query is similar to the first, but instead of pushing just the name field into the output, it pushes the entire document ($$ROOT). This provides all information about each person, not just their name.
+
+
+db.getCollection("practice-data").aggregate([
+    {
+        $bucket: {
+            groupBy: "$age",
+            boundaries: [20, 40, 60, 80],
+            default: "Age greater than 80",
+            output: {
+                count: { $sum: 1 },       // Count number of documents in each group
+                name: { $push: "$$ROOT" } // Push full document
+            }
+        }
+    },
+    {
+        $sort: { count: 1 }              // Sort groups by count in ascending order
+    },
+    {
+        $limit: 2                        // Limit to the first 2 groups
+    },
+    {
+        $project: { count: 1 }           // Project only the count field
+    }
+])
+
+
+This query adds additional stages:
+
+$sort: Sorts the output by the count field in ascending order.
+$limit: Limits the output to the first 2 groups.
+$project: Projects only the count field (removes the rest of the fields like name).
+The result will only display the count for the 2 smallest groups.
+
+
+db.getCollection("practice-data").aggregate([
+    {
+        $bucket: {
+            groupBy: "$age",                    // Group by the age field
+            boundaries: [20, 40, 60, 80],       // Define age group boundaries
+            default: "Age greater than 80",     // Default bucket for ages above 80
+            output: {
+                count: { $sum: 1 },             // Count the number of documents in each group
+                name: { $push: "$$ROOT" }       // Push the full document for each person
+            }
+        }
+    },
+    {
+        $sort: { count: 1 }                    // Sort the grouped data by count in ascending order
+    },
+    {
+        $limit: 2                              // Limit the result to the first 2 groups with the smallest count
+    },
+    {
+        $project: { count: 1 }                 // Project only the count field in the final result
+    }
+])
+
+
+Explanation of Each Stage:
+$bucket: Groups documents based on age into defined boundaries: 20–39, 40–59, 60–79, and a default group for ages above 80. The output includes a count of documents in each group and the full document (pushed into the name array).
+
+$sort: Sorts the groups by the count of documents in ascending order.
+
+$limit: Limits the result to the first 2 groups, showing the smallest groups based on the count.
+
+$project: Only returns the count field in the final output, hiding the rest (like the name array).
+
+This document represents the entire process in one aggregation pipeline.
