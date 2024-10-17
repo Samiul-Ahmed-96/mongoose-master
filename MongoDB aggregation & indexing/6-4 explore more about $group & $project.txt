@@ -1,0 +1,14 @@
+db.getCollection("practice-data").aggregate([
+
+    // stage 1
+    // total salary of all documents 
+    {
+        $group: {
+            //id = null means all documents inside a id
+            _id: null,
+            totalSalary: { $sum: "$salary"}
+        }
+
+    },
+
+])
