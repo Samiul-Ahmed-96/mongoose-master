@@ -1,0 +1,190 @@
+db.getCollection("orders-data").aggregate([
+
+    {   
+        //Used for get data from another collection inside every orders-data document
+        // Use $lookup
+        $lookup: {
+                // From which collect i get the data
+               from: "practice-data",
+               // local field means here match with userId
+               localField: "userId",
+               // Foreign feild _id
+               foreignField: "_id",
+               // what name we want to show the data
+               as: "userInfo"
+             }
+    }
+    
+])
+
+// Output 
+{
+	"_id" : ObjectId("654de5f6198dfb2206026d0c"),
+	"userId" : ObjectId("6406ad63fc13ae5a40000065"),
+	"order_number" : 1,
+	"created_at" : ISODate("2023-03-07T15:20:03.000+06:00"),
+	"products" : [
+		{
+			"product_id" : ObjectId("6406ad64fc13ae5a400000a0"),
+			"name" : "Product 1",
+			"quantity" : 2,
+			"price" : 15.99
+		},
+		{
+			"product_id" : ObjectId("6406ad64fc13ae5a400000a1"),
+			"name" : "Product 2",
+			"quantity" : 1,
+			"price" : 29.99
+		}
+	],
+	"total_amount" : 61.97,
+	"status" : "Pending",
+	"userInfo" : [
+		{
+			"_id" : ObjectId("6406ad63fc13ae5a40000065"),
+			"name" : {
+				"firstName" : "Mariele",
+				"lastName" : "Dangl"
+			},
+			"email" : "mdangl1@odnoklassniki.ru",
+			"phone" : "(167) 7775715",
+			"gender" : "Female",
+			"address" : {
+				"street" : "1188 Lerdahl Point",
+				"city" : "Dhaka",
+				"country" : "Bangladesh"
+			},
+			"company" : "Skipfire",
+			"favoutiteColor" : "Aquamarine",
+			"friends" : [ "Mir Hussain", "Fahim Ahammed Firoz" ],
+			"occupation" : "Food Chemist",
+			"interests" : [ "Cooking", "Writing", "Reading", "Driving" ],
+			"skills" : [
+				{
+					"name" : "JAVASCRIPT",
+					"level" : "Expert",
+					"isLearning" : false
+				},
+				{
+					"name" : "C#",
+					"level" : "Expert",
+					"isLearning" : true
+				},
+				{
+					"name" : "PYTHON",
+					"level" : "Beginner",
+					"isLearning" : false
+				},
+				{
+					"name" : "GO",
+					"level" : "Expert",
+					"isLearning" : true
+				},
+				{
+					"name" : "GO",
+					"level" : "Beginner",
+					"isLearning" : true
+				}
+			],
+			"education" : [
+				{
+					"degree" : "Doctor of Philosophy",
+					"major" : "Cse",
+					"institute" : "Technische Universität Dresden",
+					"year" : 2003
+				},
+				{
+					"degree" : "Master of Science",
+					"major" : "Communications",
+					"institute" : "West Liberty State College",
+					"year" : 2011
+				}
+			],
+			"languages" : [ "German", "Catalan", "Thai" ],
+			"ipAddress" : "206.108.151.156",
+			"salary" : 363,
+			"age" : 40
+		}
+	]
+},
+
+/* 2 createdAt:11/10/2023, 2:12:38 PM*/
+{
+	"_id" : ObjectId("654de5f6198dfb2206026d0d"),
+	"userId" : ObjectId("6406ad63fc13ae5a40000066"),
+	"order_number" : 2,
+	"created_at" : ISODate("2023-03-07T15:20:03.000+06:00"),
+	"products" : [
+		{
+			"product_id" : ObjectId("6406ad64fc13ae5a400000a2"),
+			"name" : "Product 4",
+			"quantity" : 3,
+			"price" : 9.99
+		},
+		{
+			"product_id" : ObjectId("6406ad64fc13ae5a400000a3"),
+			"name" : "Product 5",
+			"quantity" : 1,
+			"price" : 19.99
+		}
+	],
+	"total_amount" : 39.96,
+	"status" : "Shipped",
+	"userInfo" : [
+		{
+			"_id" : ObjectId("6406ad63fc13ae5a40000066"),
+			"name" : {
+				"firstName" : "Otto",
+				"lastName" : "Mirfin"
+			},
+			"email" : "omirfin2@i2i.jp",
+			"phone" : "(670) 1831100",
+			"gender" : "Male",
+			"age" : 12,
+			"birthday" : "9/2/2022",
+			"address" : {
+				"street" : "47 Hanover Trail",
+				"city" : "Légua",
+				"state" : "01",
+				"postalCode" : "3830-247",
+				"country" : "Portugal"
+			},
+			"company" : "Aivee",
+			"favoutiteColor" : "Violet",
+			"friends" : [ "Fahim Ahammed Firoz", "Nahid Hasan Bulbul", "Tanmoy Parvez", "Mir Hussain", "Mezbaul Abedin" ],
+			"occupation" : "Senior Cost Accountant",
+			"interests" : [ "Travelling", "Gaming", "Reading" ],
+			"skills" : [
+				{
+					"name" : "RUBY",
+					"level" : "Expert",
+					"isLearning" : true
+				},
+				{
+					"name" : "KOTLIN",
+					"level" : "Expert",
+					"isLearning" : false
+				}
+			],
+			"education" : [
+				{
+					"degree" : "Master of Fine Arts",
+					"major" : "History",
+					"institute" : "East West University",
+					"year" : 1994
+				},
+				{
+					"degree" : "Juris Doctor",
+					"major" : "Philosophy",
+					"institute" : "Kangnam University",
+					"year" : 1997
+				}
+			],
+			"languages" : [ "Assamese", "Estonian", "Portuguese" ],
+			"ipAddress" : "213.32.106.50",
+			"salary" : 202,
+			"course" : "level-2",
+			"eduTech" : "Programming Hero"
+		}
+	]
+},
