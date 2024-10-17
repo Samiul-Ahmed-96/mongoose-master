@@ -12,3 +12,131 @@ db.getCollection("practice-data").aggregate([
     },
 
 ])
+
+db.getCollection("practice-data").aggregate([
+
+    // stage 1
+    // total salary of all documents 
+    {
+        $group: {
+            //id = null means all documents inside a id
+            _id: null,
+            totalSalary: { $sum: "$salary"},
+            // Getting maximum salary of all the documents using $max and accumulator operator
+            maxSalary : {$max : '$salary'}
+        }
+
+    },
+
+])
+
+
+db.getCollection("practice-data").aggregate([
+
+    // stage 1
+    // total salary of all documents 
+    {
+        $group: {
+            //id = null means all documents inside a id
+            _id: null,
+            totalSalary: { $sum: "$salary"},
+            // Getting minimum salary of all the documents using $min and accumulator operator
+            minSalary : {$min : '$salary'}
+        }
+
+    },
+
+])
+
+
+db.getCollection("practice-data").aggregate([
+
+    // stage 1
+    // total salary of all documents 
+    {
+        $group: {
+            //id = null means all documents inside a id
+            _id: null,
+            totalSalary: { $sum: "$salary"},
+            // Getting avg salary of all the documents using $avg and accumulator operator
+            avgSalary : {$avg  : '$salary'}
+            
+        }
+
+    },
+
+])
+
+
+db.getCollection("practice-data").aggregate([
+
+    // stage 1
+    // total salary of all documents 
+    {
+        $group: {
+            //id = null means all documents inside a id
+            _id: null,
+            totalSalary: { $sum: "$salary" },
+            maxSalary: { $max: '$salary' },
+            minSalary: { $min: '$salary' },
+            avgSalary: { $avg: '$salary' }
+
+        }
+
+    },
+
+    // stage 2
+    {
+        $project: {
+            totalSalary: 1,
+            maxSalary: 1,
+            minSalary: 1,
+            avgSalary: 1
+
+        }
+    }
+
+
+])
+
+
+db.getCollection("practice-data").aggregate([
+
+    // stage 1
+    // total salary of all documents 
+    {
+        $group: {
+            //id = null means all documents inside a id
+            _id: null,
+            totalSalary: { $sum: "$salary" },
+            maxSalary: { $max: '$salary' },
+            minSalary: { $min: '$salary' },
+            avgSalary: { $avg: '$salary' }
+
+        }
+
+    },
+
+    // stage 2
+    {
+        $project: {
+            totalSalary: 1,
+            maxSalary: 1,
+            minSalary: 1,
+            //change the name of the avg salary field
+            averageSalary: "$avgSalary"
+
+        }
+    }
+
+
+])
+
+//Output
+{
+	"_id" : null,
+	"totalSalary" : 30190,
+	"maxSalary" : 499,
+	"minSalary" : 105,
+	"averageSalary" : 308.0612244897959
+}
