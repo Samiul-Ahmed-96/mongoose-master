@@ -1,142 +1,132 @@
-db.getCollection("practice-data").aggregate([
+// Aggregation pipeline examples for calculating total, maximum, minimum, average salary,
+// and additional metrics in the "practice-data" collection
 
-    // stage 1
-    // total salary of all documents 
+// Example 1: Calculate total salary of all documents
+db.getCollection("practice-data").aggregate([
     {
         $group: {
-            //id = null means all documents inside a id
-            _id: null,
-            totalSalary: { $sum: "$salary"}
+            _id: null,  // Group all documents
+            totalSalary: { $sum: "$salary" }
         }
+    }
+]);
 
-    },
-
-])
-
+// Example 2: Calculate total and maximum salary of all documents
 db.getCollection("practice-data").aggregate([
-
-    // stage 1
-    // total salary of all documents 
     {
         $group: {
-            //id = null means all documents inside a id
-            _id: null,
-            totalSalary: { $sum: "$salary"},
-            // Getting maximum salary of all the documents using $max and accumulator operator
-            maxSalary : {$max : '$salary'}
-        }
-
-    },
-
-])
-
-
-db.getCollection("practice-data").aggregate([
-
-    // stage 1
-    // total salary of all documents 
-    {
-        $group: {
-            //id = null means all documents inside a id
-            _id: null,
-            totalSalary: { $sum: "$salary"},
-            // Getting minimum salary of all the documents using $min and accumulator operator
-            minSalary : {$min : '$salary'}
-        }
-
-    },
-
-])
-
-
-db.getCollection("practice-data").aggregate([
-
-    // stage 1
-    // total salary of all documents 
-    {
-        $group: {
-            //id = null means all documents inside a id
-            _id: null,
-            totalSalary: { $sum: "$salary"},
-            // Getting avg salary of all the documents using $avg and accumulator operator
-            avgSalary : {$avg  : '$salary'}
-            
-        }
-
-    },
-
-])
-
-
-db.getCollection("practice-data").aggregate([
-
-    // stage 1
-    // total salary of all documents 
-    {
-        $group: {
-            //id = null means all documents inside a id
-            _id: null,
+            _id: null,  // Group all documents
             totalSalary: { $sum: "$salary" },
-            maxSalary: { $max: '$salary' },
-            minSalary: { $min: '$salary' },
-            avgSalary: { $avg: '$salary' }
-
+            maxSalary: { $max: "$salary" }  // Find maximum salary
         }
+    }
+]);
 
-    },
-
-    // stage 2
+// Example 3: Calculate total and minimum salary of all documents
+db.getCollection("practice-data").aggregate([
     {
-        $project: {
+        $group: {
+            _id: null,  // Group all documents
+            totalSalary: { $sum: "$salary" },
+            minSalary: { $min: "$salary" }  // Find minimum salary
+        }
+    }
+]);
+
+// Example 4: Calculate total and average salary of all documents
+db.getCollection("practice-data").aggregate([
+    {
+        $group: {
+            _id: null,  // Group all documents
+            totalSalary: { $sum: "$salary" },
+            avgSalary: { $avg: "$salary" }  // Calculate average salary
+        }
+    }
+]);
+
+// Example 5: Calculate total, maximum, minimum, and average salary of all documents
+db.getCollection("practice-data").aggregate([
+    {
+        $group: {
+            _id: null,  // Group all documents
+            totalSalary: { $sum: "$salary" },
+            maxSalary: { $max: "$salary" },
+            minSalary: { $min: "$salary" },
+            avgSalary: { $avg: "$salary" }
+        }
+    },
+    {
+        $project: {  // Include specific fields in the output
             totalSalary: 1,
             maxSalary: 1,
             minSalary: 1,
             avgSalary: 1
-
         }
     }
+]);
 
-
-])
-
-
+// Example 6: Rename the avgSalary field to averageSalary
 db.getCollection("practice-data").aggregate([
-
-    // stage 1
-    // total salary of all documents 
     {
         $group: {
-            //id = null means all documents inside a id
-            _id: null,
+            _id: null,  // Group all documents
             totalSalary: { $sum: "$salary" },
-            maxSalary: { $max: '$salary' },
-            minSalary: { $min: '$salary' },
-            avgSalary: { $avg: '$salary' }
-
+            maxSalary: { $max: "$salary" },
+            minSalary: { $min: "$salary" },
+            avgSalary: { $avg: "$salary" }
         }
-
     },
-
-    // stage 2
     {
-        $project: {
+        $project: {  // Rename avgSalary to averageSalary
             totalSalary: 1,
             maxSalary: 1,
             minSalary: 1,
-            //change the name of the avg salary field
             averageSalary: "$avgSalary"
-
         }
     }
+]);
 
-
-])
-
-//Output
+// Example output for the aggregation above
+/*
 {
-	"_id" : null,
-	"totalSalary" : 30190,
-	"maxSalary" : 499,
-	"minSalary" : 105,
-	"averageSalary" : 308.0612244897959
+    "_id": null,
+    "totalSalary": 30190,
+    "maxSalary": 499,
+    "minSalary": 105,
+    "averageSalary": 308.0612244897959
 }
+*/
+
+// Example 7: Add a field to calculate the range between max and min salary
+db.getCollection("practice-data").aggregate([
+    {
+        $group: {
+            _id: null,  // Group all documents
+            totalSalary: { $sum: "$salary" },
+            maxSalary: { $max: "$salary" },
+            minSalary: { $min: "$salary" },
+            avgSalary: { $avg: "$salary" }
+        }
+    },
+    {
+        $project: {  // Rename avgSalary and calculate range between max and min salary
+            totalSalary: 1,
+            maxSalary: 1,
+            minSalary: 1,
+            averageSalary: "$avgSalary",
+            rangeBetweenMaxAndMin: { $subtract: ["$maxSalary", "$minSalary"] }  // Calculate range
+        }
+    }
+]);
+
+// Example output for the aggregation above
+/*
+{
+    "_id": null,
+    "totalSalary": 30190,
+    "maxSalary": 499,
+    "minSalary": 105,
+    "averageSalary": 308.0612244897959,
+    "rangeBetweenMaxAndMin": 394
+}
+*/
