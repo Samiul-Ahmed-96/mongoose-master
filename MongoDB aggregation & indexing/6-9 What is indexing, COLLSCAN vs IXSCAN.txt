@@ -1,0 +1,8 @@
+// IDHACK Filter (Fast)
+db.getCollection("practice-data").find({_id : ObjectId("6406ad63fc13ae5a40000065")}).explain("executionStats")
+
+// COLLSCAN Filter (Slow)
+db.getCollection("practice-data").find({email : "mdangl1@odnoklassniki.ru"}).explain("executionStats")
+
+// Make indexing with Email in Massive data
+db.getCollection("massive-data").createIndex({email :1 })

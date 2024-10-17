@@ -1,0 +1,9 @@
+creating a text index on the about field of the massive-data collection to enable text search, and then querying the collection to find documents containing the word "dolor". Here’s a breakdown of the process:
+
+db.getCollection("massive-data").createIndex({ about: "text" })
+
+
+$search: "dolor" specifies the word you're looking for.
+.project({ about: 1 }) limits the output to only display the about field.
+
+db.getCollection("massive-data").find({ $text: { $search: "dolor" } }).project({ about: 1 })
