@@ -1,0 +1,63 @@
+// Example 1: Count the occurrence of each friend across documents
+
+db.getCollection("practice-data").aggregate([
+    // Stage 1: Unwind the "friends" array to process each friend individually
+    { $unwind: "$friends" },
+
+    // Stage 2: Group by each friend and count how many times they appear
+    { $group: { 
+        _id: "$friends",  // Group by friend names
+        count: { $sum: 1 }  // Count occurrences of each friend
+    }}
+]);
+
+// Example output for the aggregation above
+/*
+{
+    "_id": "Mezbaul Abedin",
+    "count": 40
+},
+{
+    "_id": "Mir Hussain",
+    "count": 52
+},
+{
+    "_id": "Tanmoy Parvez",
+    "count": 41
+},
+{
+    "_id": "Mizanur Rahman",
+    "count": 39
+},
+*/
+
+// Example 2: Group interests by age
+
+db.getCollection("practice-data").aggregate([
+    // Stage 1: Unwind the "interests" array to process each interest individually
+    { $unwind: "$interests" },
+
+    // Stage 2: Group by age and accumulate interests for each age group
+    { 
+        $group: { 
+            _id: "$age",  // Group by age
+            interestPerAge: { $push: "$interests" }  // Push all interests into an array
+        }
+    }
+]);
+
+// Example output for the aggregation above
+/*
+{
+    "_id": 90,
+    "interestPerAge": ["Gardening", "Gaming", "Cooking"]
+},
+{
+    "_id": 74,
+    "interestPerAge": ["Travelling", "Gardening", "Reading"]
+},
+{
+    "_id": 13,
+    "interestPerAge": ["Reading", "Writing", "Travelling"]
+}
+*/
