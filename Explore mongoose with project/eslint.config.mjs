@@ -13,7 +13,7 @@ export default [
       "no-unused-vars": "error",
       "prefer-const": ["error", { ignoreReadBeforeAssign: true }],
       "no-unused-expressions" : "error",
-      "no-console" : "warn",
+      // "no-console" : "warn",
       "no-undefined" : "error"
       
     },
