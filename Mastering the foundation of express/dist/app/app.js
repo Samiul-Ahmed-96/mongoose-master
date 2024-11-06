@@ -45,7 +45,7 @@ userRouter.post("/create-user", (req, res) => {
         data: user,
     });
 });
-// create api using user router
+// create api using course router
 courseRouter.post("/create-course", (req, res) => {
     const course = req.body;
     res.json({

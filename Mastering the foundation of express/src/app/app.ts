@@ -49,7 +49,7 @@ userRouter.post("/create-user", (req: Request, res: Response) => {
     data: user,
   });
 });
-// create api using user router
+// create api using course router
 courseRouter.post("/create-course", (req: Request, res: Response) => {
   const course = req.body;
   res.json({
