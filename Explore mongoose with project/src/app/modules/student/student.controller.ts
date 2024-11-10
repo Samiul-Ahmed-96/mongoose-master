@@ -12,7 +12,11 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+      error: err,
+    });
   }
 };
 
@@ -21,7 +25,21 @@ const getAllStudents = async (req: Request, res: Response) => {
     const result = await StudentServices.getAllStudentsFromDB();
     res.status(200).json({
       success: true,
-      message: 'Students Data',
+      message: 'Students Data Retrieved',
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getSingleStudent = async (req: Request, res: Response) => {
+  try {
+    const { studentId } = req.params;
+    const result = await StudentServices.getSingleStudentFromDB(studentId);
+    res.status(200).json({
+      success: true,
+      message: 'Student Retrieved Successfully',
       data: result,
     });
   } catch (err) {
@@ -32,4 +50,5 @@ const getAllStudents = async (req: Request, res: Response) => {
 export const StudentControllers = {
   createStudent,
   getAllStudents,
+  getSingleStudent,
 };
