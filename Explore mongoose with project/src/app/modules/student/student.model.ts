@@ -70,6 +70,14 @@ const studentSchema = new Schema<Student>({
     required: [true, 'Student ID is required'],
     unique: true,
   },
+
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    unique: true,
+    maxlength: [20, 'Password can not be more than 20 characters'],
+  },
+
   name: {
     type: userNameSchema,
     required: [true, 'Name information is required'],
@@ -128,6 +136,18 @@ const studentSchema = new Schema<Student>({
     },
     default: 'active',
   },
+});
+
+//pre save middleware / hooks
+
+studentSchema.pre('save', function () {
+  console.log(this, 'Pre hook : will save the data');
+});
+
+//post save middleware / hooks
+
+studentSchema.post('save', function () {
+  console.log(this, 'Post hook : we saved our data');
 });
 
 export const StudentModel = model<Student>('Student', studentSchema);
