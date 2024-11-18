@@ -14,4 +14,5 @@ if (!databaseUrl) {
 export default {
   port,
   database_url: databaseUrl,
+  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUND,
 };

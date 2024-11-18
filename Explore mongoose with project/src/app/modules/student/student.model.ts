@@ -1,5 +1,7 @@
+import bcrypt from 'bcrypt';
 import { model, Schema } from 'mongoose';
 import validator from 'validator';
+import config from '../../config';
 import {
   Guardian,
   LocalGuardian,
@@ -140,8 +142,18 @@ const studentSchema = new Schema<Student>({
 
 //pre save middleware / hooks
 
-studentSchema.pre('save', function () {
-  console.log(this, 'Pre hook : will save the data');
+studentSchema.pre('save', async function (next) {
+  // console.log(this, 'Pre hook : will save the data');
+
+  //Got data using this
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  // Hashing password
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
 });
 
 //post save middleware / hooks
