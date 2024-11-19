@@ -35,4 +35,5 @@ export type Student = {
   guardian: Guardian;
   localGuardian: LocalGuardian;
   isActive: 'active' | 'blocked';
+  isDeleted: boolean;
 };

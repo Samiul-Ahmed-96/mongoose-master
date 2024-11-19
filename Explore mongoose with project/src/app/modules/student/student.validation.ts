@@ -78,6 +78,7 @@ const studentValidationSchema = z.object({
       errorMap: () => ({ message: '{VALUE} is not a valid status' }),
     })
     .default('active'),
+  isDeleted: z.boolean(),
 });
 
 export default studentValidationSchema;

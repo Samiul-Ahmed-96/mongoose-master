@@ -76,7 +76,6 @@ const studentSchema = new Schema<Student>({
   password: {
     type: String,
     required: [true, 'Password is required'],
-    unique: true,
     maxlength: [20, 'Password can not be more than 20 characters'],
   },
 
@@ -138,14 +137,18 @@ const studentSchema = new Schema<Student>({
     },
     default: 'active',
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //pre save middleware / hooks
 
 studentSchema.pre('save', async function (next) {
   // console.log(this, 'Pre hook : will save the data');
-
   //Got data using this
+
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
   // Hashing password
@@ -158,8 +161,22 @@ studentSchema.pre('save', async function (next) {
 
 //post save middleware / hooks
 
-studentSchema.post('save', function () {
-  console.log(this, 'Post hook : we saved our data');
+studentSchema.post('save', function (doc, next) {
+  // console.log(this, 'Post hook : we saved our data');
+  doc.password = '';
+  next();
+});
+
+//Query middleware
+
+studentSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+studentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
 });
 
 export const StudentModel = model<Student>('Student', studentSchema);
