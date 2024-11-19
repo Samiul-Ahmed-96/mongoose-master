@@ -169,13 +169,19 @@ studentSchema.post('save', function (doc, next) {
 
 //Query middleware
 
+// Work on find
 studentSchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
-
+// Work on findOne
 studentSchema.pre('findOne', function (next) {
   this.find({ isDeleted: { $ne: true } });
+  next();
+});
+// Work on aggregate
+studentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
 });
 
